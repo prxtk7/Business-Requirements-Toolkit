@@ -1,0 +1,22 @@
+# Dependencies and build output
+node_modules
+dist
+coverage
+*.tsbuildinfo
+.vite
+
+# Local environment files (none are needed; never commit them)
+.env
+.env.*
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor and operating system files
+.idea
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db

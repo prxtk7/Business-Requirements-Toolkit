@@ -1,0 +1,272 @@
+import type { Risk, RiskLinks } from '../domain/types';
+
+/**
+ * FICTIONAL DEMONSTRATION DATA — Northstar HVAC Services risk register.
+ *
+ * Illustrative risks for the Field Service Management (FSM) implementation.
+ * Probability and impact ratings are example assessments for the portfolio
+ * scenario, not findings from a real organisation. Statuses such as
+ * "Materialised" and "Closed" describe the fictional project's progress.
+ */
+
+type Seed = Omit<Risk, 'id' | 'identifier' | 'createdAt' | 'updatedAt' | 'links'> & { n: number; links?: Partial<RiskLinks> };
+
+const stakeholder = (id: string) => ({ stakeholderId: `stk_demo_${id}`, customName: '' });
+
+const SEEDS: Seed[] = [
+  {
+    n: 1,
+    title: 'Technicians resist adopting the mobile work-order app',
+    description:
+      'Technicians are used to paper job sheets and phone calls. If the app feels slower or harder to use on site, they may keep using paper, leaving completion records incomplete.',
+    category: 'organisational',
+    probability: 4,
+    impact: 4,
+    response: 'mitigate',
+    mitigation: 'Involve two technicians in design reviews and pilot testing; keep mandatory fields to the minimum agreed with the Operations Manager.',
+    contingency: 'Extend the pilot and provide on-site floor-walkers during the first weeks after go-live.',
+    owner: stakeholder('operations'),
+    status: 'response-planned',
+    links: {
+      stakeholderIds: ['stk_demo_technicians'],
+      objectiveIds: ['obj_demo_work_orders'],
+      stepIds: ['stp_demo_to_complete', 'stp_demo_to_work_order'],
+      requirementIds: ['req_demo_fr006', 'req_demo_nfr005'],
+      storyIds: ['us_demo_006'],
+    },
+  },
+  {
+    n: 2,
+    title: 'Customer records are incomplete or inconsistent',
+    description:
+      'Customer and site details in the existing spreadsheets were entered in different ways by different staff, so duplicates and missing fields are likely when they are loaded into the new system.',
+    category: 'data-security',
+    probability: 4,
+    impact: 3,
+    response: 'mitigate',
+    mitigation: 'Run a data-cleansing exercise before migration using agreed rules for customer, site and equipment fields.',
+    contingency: 'Flag unverified records in the new system and confirm details with the customer at the next contact.',
+    owner: stakeholder('customer_service'),
+    status: 'in-progress',
+    links: {
+      stakeholderIds: ['stk_demo_customer_service'],
+      objectiveIds: ['obj_demo_requests'],
+      stepIds: ['stp_demo_as_record'],
+      requirementIds: ['req_demo_fr001'],
+      storyIds: ['us_demo_001'],
+    },
+  },
+  {
+    n: 3,
+    title: 'Finance system integration takes longer than planned',
+    description:
+      'Completed work orders must flow into the existing finance system for invoicing. The interface may need more development and testing than estimated.',
+    category: 'technical',
+    probability: 3,
+    impact: 4,
+    response: 'mitigate',
+    mitigation: 'Agree the data format with Finance early and test the interface with sample work orders before go-live.',
+    contingency: 'Export completed work orders to a file for manual import into the finance system until the interface is ready.',
+    owner: stakeholder('it'),
+    status: 'materialised',
+    links: {
+      stakeholderIds: ['stk_demo_finance', 'stk_demo_it'],
+      objectiveIds: ['obj_demo_finance'],
+      stepIds: ['stp_demo_to_finance'],
+      requirementIds: ['req_demo_fr014', 'req_demo_nfr007'],
+    },
+  },
+  {
+    n: 4,
+    title: 'Staff need more training than planned',
+    description: 'Dispatchers and customer service staff will use the system all day. One training session may not be enough to use the scheduling board confidently.',
+    category: 'resource',
+    probability: 3,
+    impact: 3,
+    response: 'mitigate',
+    mitigation: 'Provide role-based training, quick-reference guides and a practice environment before go-live.',
+    contingency: 'Arrange refresher sessions and extend vendor support for the first month.',
+    owner: stakeholder('operations'),
+    status: 'response-planned',
+    links: {
+      stakeholderIds: ['stk_demo_dispatch', 'stk_demo_customer_service'],
+      storyIds: ['us_demo_003', 'us_demo_004'],
+    },
+  },
+  {
+    n: 5,
+    title: 'Data migration produces incorrect service history',
+    description:
+      'Historical job sheets are partly on paper and partly in spreadsheets. Migrating them could attach work to the wrong site or equipment, misleading technicians on future visits.',
+    category: 'data-security',
+    probability: 4,
+    impact: 5,
+    response: 'avoid',
+    mitigation: 'Migrate only service history that has been verified; keep older records in a read-only archive instead of the new system.',
+    contingency: 'Hide affected history in the app and correct records from the archive before the next visit to the site.',
+    owner: stakeholder('it'),
+    status: 'identified',
+    links: {
+      objectiveIds: ['obj_demo_work_orders'],
+      stepIds: ['stp_demo_as_completion'],
+      requirementIds: ['req_demo_fr009'],
+      storyIds: ['us_demo_010'],
+    },
+  },
+  {
+    n: 6,
+    title: 'Implementation exceeds the allocated budget',
+    description: 'Additional configuration, integration work or training could push costs above the approved budget.',
+    category: 'financial',
+    probability: 2,
+    impact: 4,
+    response: 'mitigate',
+    mitigation: 'Track spend against budget monthly and agree a change-control process for scope changes.',
+    contingency: 'Defer Could Have requirements to a later release to stay within budget.',
+    owner: stakeholder('finance'),
+    status: 'monitoring',
+    links: { stakeholderIds: ['stk_demo_sponsor'] },
+  },
+  {
+    n: 7,
+    title: 'System unavailable during critical service operations',
+    description: 'An outage during the working day would stop dispatch and leave technicians without work orders, especially during peak heating or cooling demand.',
+    category: 'technical',
+    probability: 2,
+    impact: 5,
+    response: 'transfer',
+    mitigation: 'Include availability and support response times in the vendor contract.',
+    contingency: 'Switch to the documented manual fallback: dispatch by phone using a daily export of scheduled visits.',
+    owner: stakeholder('it'),
+    status: 'response-planned',
+    links: {
+      objectiveIds: ['obj_demo_work_orders'],
+      requirementIds: ['req_demo_nfr001', 'req_demo_nfr004'],
+    },
+  },
+  {
+    n: 8,
+    title: 'Technicians unavailable for testing delays implementation',
+    description: 'User acceptance testing needs experienced technicians, who are fully booked during peak season.',
+    category: 'schedule',
+    probability: 4,
+    impact: 5,
+    response: 'mitigate',
+    mitigation: 'Schedule testing outside peak season and agree protected testing days with the Operations Manager.',
+    contingency: 'Re-plan the go-live date and test with a smaller group of technicians.',
+    owner: stakeholder('operations'),
+    status: 'in-progress',
+    links: { stakeholderIds: ['stk_demo_technicians', 'stk_demo_dispatch'] },
+  },
+  {
+    n: 9,
+    title: 'Go-live during peak season disrupts customer service',
+    description: 'Switching systems while demand is highest could slow dispatch and lead to missed appointments.',
+    category: 'operational',
+    probability: 3,
+    impact: 5,
+    response: 'avoid',
+    mitigation: 'Plan go-live for a quieter period and run old and new processes in parallel for one week.',
+    contingency: 'Increase dispatch staffing for the first two weeks after go-live.',
+    owner: stakeholder('sponsor'),
+    status: 'under-assessment',
+    links: { objectiveIds: ['obj_demo_scheduling'], stepIds: ['stp_demo_to_schedule'] },
+  },
+  {
+    n: 10,
+    title: 'Automatic customer emails treated as spam',
+    description: 'Acknowledgements and appointment confirmations could be filtered by customers’ email providers, so customers do not receive them.',
+    category: 'external',
+    probability: 3,
+    impact: 2,
+    response: 'accept',
+    mitigation: '',
+    contingency: 'Customer service confirms appointments by phone for customers who report not receiving emails.',
+    owner: stakeholder('customer_service'),
+    status: 'identified',
+    links: {
+      stepIds: ['stp_demo_to_acknowledge', 'stp_demo_to_confirm'],
+      requirementIds: ['req_demo_fr002', 'req_demo_fr008'],
+      storyIds: ['us_demo_002', 'us_demo_008'],
+    },
+  },
+  {
+    n: 11,
+    title: 'Customer data on mobile devices not adequately protected',
+    description: 'Technicians’ devices will hold customer names, addresses and site access notes. A lost device could expose this information.',
+    category: 'compliance',
+    probability: 2,
+    impact: 4,
+    response: 'mitigate',
+    mitigation: 'Use managed devices with encryption and remote wipe; limit the data shown in the app to assigned jobs.',
+    contingency: 'Follow the incident procedure: wipe the device remotely and assess whether customers must be informed.',
+    owner: { stakeholderId: null, customName: 'Data Protection Lead (external adviser)' },
+    status: 'monitoring',
+    links: { requirementIds: ['req_demo_nfr002', 'req_demo_nfr006'], storyIds: ['us_demo_013'] },
+  },
+  {
+    n: 12,
+    title: 'Key dispatcher unavailable for requirements workshops',
+    description: 'The lead dispatcher holds most of the scheduling knowledge and was due to be on leave during the workshop period.',
+    category: 'resource',
+    probability: 2,
+    impact: 2,
+    response: 'accept',
+    mitigation: '',
+    contingency: 'Hold a follow-up workshop on return and review the documented process with the dispatcher.',
+    owner: stakeholder('operations'),
+    status: 'closed',
+    links: { stakeholderIds: ['stk_demo_dispatch'], stepIds: ['stp_demo_as_availability', 'stp_demo_as_assign'] },
+  },
+  {
+    n: 13,
+    title: 'Technician-level reports are seen as monitoring individuals',
+    description:
+      'The completed-work-order report shows work orders and hours per technician. If technicians see it as performance surveillance, adoption of the mobile app could suffer (see RSK-001).',
+    category: 'organisational',
+    probability: 2,
+    impact: 4,
+    response: 'mitigate',
+    mitigation:
+      'Agree the technician-level content of standard reports with technician representatives before go-live; keep it to workload planning figures, with no location history or productivity rankings.',
+    contingency: 'Remove technician-level breakdowns from standard reports and report team totals only.',
+    owner: stakeholder('operations'),
+    status: 'identified',
+    links: { objectiveIds: ['obj_demo_reporting'], requirementIds: ['req_demo_fr013'], storyIds: ['us_demo_015'] },
+  },
+  {
+    n: 14,
+    title: 'Retention period for work-order records is not confirmed before go-live',
+    description:
+      'NFR-009 depends on management and a compliance adviser confirming how long completed work orders and attached risk assessments must be kept. Without a confirmed period, records may be kept longer or shorter than required.',
+    category: 'compliance',
+    probability: 3,
+    impact: 3,
+    response: 'mitigate',
+    mitigation: 'Make written confirmation of the retention period a go-live condition and track it as an open decision.',
+    contingency: 'Go live with no automatic deletion, as NFR-009 requires, and configure the period once it is confirmed.',
+    owner: stakeholder('sponsor'),
+    status: 'identified',
+    links: { objectiveIds: ['obj_demo_work_orders'], requirementIds: ['req_demo_nfr009', 'req_demo_fr017'] },
+  },
+];
+
+export const DEMO_RISK_SEQUENCE = SEEDS.length;
+
+export function createDemoRisks(now: string): Risk[] {
+  return SEEDS.map(({ n, links, owner, ...rest }) => ({
+    id: `rsk_demo_${String(n).padStart(3, '0')}`,
+    identifier: `RSK-${String(n).padStart(3, '0')}`,
+    ...rest,
+    owner: { ...owner },
+    links: {
+      stakeholderIds: [...(links?.stakeholderIds ?? [])],
+      objectiveIds: [...(links?.objectiveIds ?? [])],
+      stepIds: [...(links?.stepIds ?? [])],
+      requirementIds: [...(links?.requirementIds ?? [])],
+      storyIds: [...(links?.storyIds ?? [])],
+    },
+    createdAt: now,
+    updatedAt: now,
+  }));
+}
