@@ -1,220 +1,134 @@
 # Business Requirements Toolkit
 
-A browser-based workspace for the analysis behind a business change: project charter, stakeholder analysis, AS-IS and TO-BE process analysis, requirements with traceability, user stories with acceptance criteria, and risk management.
+A browser-based tool for documenting the business analysis behind a planned change: stakeholder analysis, AS-IS and TO-BE processes, requirements with traceability, user stories with acceptance criteria, and risk management, all linked in one workspace.
 
-It is demonstrated with a **fictional** case: *Northstar HVAC Services*, an HVAC service company planning a Field Service Management (FSM) system. The toolkit documents and connects the analysis for that system. **It is not an FSM application itself**: it does not dispatch technicians, take service requests, manage stock or execute work orders.
-
-![Workspace summary](docs/screenshots/01-workspace-summary.png)
-
-## Contents
-
-- [Overview](#overview)
-- [The business problem](#the-business-problem)
-- [Project objectives](#project-objectives)
-- [Solution and boundaries](#solution-and-boundaries)
-- [Modules](#modules)
-- [Key capabilities](#key-capabilities)
-- [Screenshots](#screenshots)
-- [Technology](#technology)
-- [Architecture](#architecture)
-- [Getting started](#getting-started)
-- [Testing and quality](#testing-and-quality)
-- [Known limitations](#known-limitations)
-- [Possible next steps](#possible-next-steps)
-- [About this project](#about-this-project)
+> **All included data is fictional.** Northstar HVAC Services, its staff, customers, processes, requirements, risks and figures were invented for demonstration. They are not findings from a real organisation or validated stakeholder research, and numeric targets are illustrative planning goals, not measured results. Do not enter real or confidential business data.
 
 ## Overview
 
-Business analysis artefacts often live in separate documents: a stakeholder list in one place, process maps in another, requirements in a spreadsheet, stories in a ticketing tool and risks in a register. This toolkit keeps them in one model and links them, so it is possible to answer questions such as:
+Northstar HVAC Services, a fictional heating, ventilation and air-conditioning company, coordinates its work with phone calls, emails, spreadsheets and a whiteboard. Requests are recorded inconsistently, dispatchers cannot easily see who is available, technicians arrive without the right parts, customers chase updates by phone and finance re-keys paper job sheets. The company is planning a Field Service Management (FSM) system.
 
-- Which stakeholder asked for this requirement, and which objective does it serve?
-- Which current process problem does it address, and how does the future process change?
-- Which user stories deliver it, and have their acceptance criteria been checked?
-- Which risks threaten it, how severe are they, and who owns them?
+The toolkit documents the analysis for that change. A stakeholder list, process maps, a requirements spreadsheet, user stories and a risk register usually live in separate documents, which makes it hard to see why a requirement exists or what depends on it. Here they are kept in one linked model, so each requirement can be followed from the stakeholder and objective behind it, through the process steps it changes, to the user stories that deliver it and the risks that threaten it. **It is an analysis tool, not an FSM application:** it does not take service requests, dispatch technicians, manage work orders, reserve parts or send notifications.
 
-Records are entered through forms with validation. Links are kept consistent: for example, a stakeholder cannot be deleted while a requirement still names them as its source.
-
-## The business problem
-
-> **Fictional scenario.** Northstar HVAC Services and every person, customer, process and figure in the demo are invented. Numeric targets are labelled illustrative; they are planning goals, not results or research findings.
-
-Northstar installs, maintains and repairs heating, ventilation and air-conditioning systems. Service requests arrive by phone and email and are recorded in shared spreadsheets. Technician schedules are kept on a whiteboard and in individual calendars, spare parts are tracked separately, and job details reach technicians by phone or text message. As a result:
-
-- requests are recorded inconsistently and are often incomplete;
-- dispatchers cannot easily see which technicians are available;
-- technicians sometimes arrive without the parts needed, causing repeat visits;
-- customers receive inconsistent appointment and status updates;
-- finance re-keys paper job sheets to raise invoices;
-- managers have little reliable operational data.
-
-The full scenario is described in [docs/business-case.md](docs/business-case.md).
-
-## Project objectives
-
-The demo project, *Field Service Management System*, records seven objectives:
-
-1. Centralise the recording and tracking of all service requests.
-2. Improve technician scheduling and allocation based on availability and skills.
-3. Manage work orders digitally from creation to completion.
-4. Give managers and coordinators clear visibility of field operations.
-5. Provide customers with consistent appointment confirmations and status updates.
-6. Deliver reliable management reporting on service performance.
-7. Provide the finance department with complete and accurate completed-work-order data for invoicing without manual re-entry.
-
-Objective 7 and several scope boundaries (live GPS tracking excluded, van stock visibility limited to viewing and deducting, health and safety limited to document attachment, financial valuation left in the finance system) were added after a stakeholder and scope review. They are the author's project decisions for the fictional scenario, not findings validated with a real organisation. They are listed in [docs/business-case.md](docs/business-case.md#scope-decisions).
-
-## Solution and boundaries
-
-| | |
-| --- | --- |
-| **What this toolkit implements** | A structured, linked record of the analysis: charter, stakeholders, processes, requirements, user stories, acceptance criteria and risks, with traceability, coverage and risk views |
-| **What the proposed FSM system would do** (described in the analysis, not built) | Service request intake and status tracking, scheduling and dispatch, mobile work orders with technician change notifications, parts reservation and basic van stock visibility, customer notifications, dashboards and standard reports, transfer of completed work orders to the finance system, site risk-assessment documents on work orders |
-| **What the demo data shows** | One fictional project with 10 stakeholders, a 12-step AS-IS and a 14-step TO-BE process, 27 requirements (18 functional, 9 non-functional, including one recorded as Won't Have), 18 user stories with 36 acceptance criteria, and 14 risks |
-
-All data stays in the browser. You can edit the demo freely, start a blank workspace, or restore the demo at any time from **Workspace data**.
-
-## Modules
-
-### 1. Project Overview & Stakeholder Analysis
-
-- Project charter: background, problem statement, objectives, in-scope and out-of-scope items, success criteria, with a completeness checklist.
-- Stakeholder register with role, description, expectations, interest and influence.
-- Influence-interest grid. The engagement strategy (manage closely, keep satisfied, keep informed, monitor) is derived from the two ratings, never typed in.
-
-### 2. Process Analysis
-
-- AS-IS and TO-BE processes as ordered steps with owner, input, output, decision points and notes.
-- Bottlenecks recorded against AS-IS steps (with severity) and improvements against TO-BE steps (with priority).
-- Each TO-BE step is marked unchanged, modified, new or automated and linked to the AS-IS steps it replaces. A comparison view shows both side by side, including removed steps.
-
-### 3. Requirements Management & Traceability
-
-- Functional (`FR-001`) and non-functional (`NFR-001`) requirements with category, description, rationale, MoSCoW priority, status and requirement-level acceptance criteria.
-- Links to a source stakeholder, objectives, AS-IS and TO-BE steps, and other requirements (circular dependencies are rejected).
-- Traceability matrix with gap filters: requirements without a stakeholder, objective, process step or user story.
-
-### 4. User Stories & Acceptance Criteria
-
-- Stories built from role, need and benefit, displayed as "As a … I want … so that …". The role is a stakeholder from the register or a clearly marked custom persona.
-- Acceptance criteria in Given / When / Then form, with a recorded verification outcome: Not Tested, Passed, Failed or Blocked.
-- Coverage view that keeps "a story exists" separate from "its criteria have been verified".
-
-### 5. Risk Management
-
-- Risk register with category, probability and impact (1–5), response (avoid, mitigate, transfer, accept), mitigation and contingency plans, owner and status.
-- Score (probability × impact) and severity band (Low 1–4, Medium 5–9, High 10–16, Critical 17–25) are always calculated, never entered.
-- 5 × 5 risk matrix; risks can be linked to stakeholders, objectives, process steps, requirements and stories.
-
-## Key capabilities
-
-| Capability | Example from the demo |
-| --- | --- |
-| End-to-end traceability | FR-007 *Spare parts reservation* traces to the Warehouse Manager, the work-order objective, AS-IS step *Collect spare parts* (bottleneck: parts not checked before the visit) and TO-BE step *Reserve spare parts against the work order*, and is delivered by US-007 |
-| Gap analysis | The traceability matrix reports 23 of 27 requirements fully traced and 9 without a user story. The gaps are deliberate in the demo |
-| Process change analysis | The comparison counts 1 unchanged, 8 modified, 2 new and 3 automated steps between AS-IS and TO-BE; no AS-IS step is removed |
-| Acceptance criteria and verification | US-006 *Complete work orders on site* has three criteria; one is recorded as Failed in a fictional pilot review |
-| Risk assessment | RSK-001 *Technicians resist adopting the mobile work-order app*: probability 4 × impact 4 = 16, High; owned by the Operations Manager; linked to FR-006, NFR-005 and US-006 |
-| Data integrity | Identifiers are never reused; deletions that would break a link are blocked or explained; saved data is validated, migrated and backed up before any repair |
-
-A step-by-step walkthrough of these links is in [docs/requirements-workflow.md](docs/requirements-workflow.md).
+It is a portfolio project demonstrating business analysis and requirements engineering practice, and it runs locally in the browser with no server or account. The author set the scope, defined the module requirements and acceptance rules for each development phase, reviewed the results and made the project decisions, including the scope decisions D1–D7 in [docs/business-case.md](docs/business-case.md#scope-decisions). The code and tests were written with Claude Code, an AI coding assistant, to those requirements. The demonstration content was drafted with AI assistance and then reviewed and refined by the author.
 
 ## Screenshots
 
-| | |
+All screenshots show the fictional Northstar HVAC demonstration data.
+
+### Workspace and stakeholders
+
+| Workspace summary | Stakeholder analysis |
 | --- | --- |
-| ![Stakeholder analysis](docs/screenshots/03-stakeholder-analysis.png) **Stakeholder analysis.** Influence-interest grid and register | ![AS-IS and TO-BE comparison](docs/screenshots/05-as-is-to-be-comparison.png) **AS-IS and TO-BE comparison.** Change per step, bottlenecks and improvements |
-| ![Traceability matrix](docs/screenshots/07-traceability-matrix.png) **Traceability matrix.** Requirement to stakeholder, objective, process and story, with gap totals | ![User story with acceptance criteria](docs/screenshots/08-user-story-acceptance-criteria.png) **User story.** Given / When / Then criteria with verification outcomes |
-| ![Risk register](docs/screenshots/10-risk-register.png) **Risk register.** Derived scores and severity, owners, responses | ![Risk matrix](docs/screenshots/11-risk-matrix.png) **Risk matrix.** 5 × 5 probability-impact grid |
+| ![Summary dashboard with project completeness, stakeholder strategies and summaries of processes, requirements, stories and risks](docs/screenshots/01-workspace-summary.png) | ![Influence-interest grid with derived engagement strategies above the register of ten stakeholders](docs/screenshots/03-stakeholder-analysis.png) |
 
-All eleven screenshots, with descriptions, are listed in [docs/screenshots](docs/screenshots/README.md).
+Project charter with background, problem statement, objectives, scope and illustrative success criteria.
 
-## Technology
+![Project overview page with seven objectives, in-scope and out-of-scope items and success criteria](docs/screenshots/02-project-overview.png)
 
-| Area | Choice |
+### Process analysis
+
+| AS-IS process with bottlenecks | AS-IS and TO-BE comparison |
 | --- | --- |
-| Interface | React 19, TypeScript (strict), Tailwind CSS 4, Lucide icons |
-| Routing | React Router, with each module loaded on demand |
-| Build | Vite |
-| Storage | Browser `localStorage`, versioned and validated |
-| Testing | Vitest and Testing Library (jsdom) |
-| Linting | oxlint (React Hooks, React Refresh, jsx-a11y and TypeScript rules) |
+| ![AS-IS process steps with owner, input, output, decisions, bottleneck counts and linked requirements](docs/screenshots/04-as-is-process-bottlenecks.png) | ![Side-by-side AS-IS and TO-BE steps with change type, bottlenecks and improvements](docs/screenshots/05-as-is-to-be-comparison.png) |
 
-## Architecture
+### Requirements and user stories
 
-A single-page application with no backend. Business rules live in a plain TypeScript domain layer with no React code. A reducer and a provider apply and save every change, and each module's pages are loaded when first opened.
+| Requirements register | Traceability matrix |
+| --- | --- |
+| ![Functional and non-functional requirements with MoSCoW priority, status, filters and story counts](docs/screenshots/06-requirements-register.png) | ![Each requirement linked to its stakeholder, objectives, AS-IS and TO-BE steps and user stories, with gap totals](docs/screenshots/07-traceability-matrix.png) |
 
-```
-src/domain     business rules, validation, traceability, scoring, integrity checks
-src/state      reducer and provider: validate → apply → save
-src/storage    versioned localStorage, migrations, backup and recovery
-src/features   one folder per module
-src/components layout and reusable UI
-```
+| User story with acceptance criteria | Story coverage |
+| --- | --- |
+| ![User story US-006 with Given/When/Then acceptance criteria, recorded verification outcomes and linked requirements](docs/screenshots/08-user-story-acceptance-criteria.png) | ![Requirements with and without user stories, reported separately from acceptance-criteria verification](docs/screenshots/09-story-coverage.png) |
 
-Details are in [docs/architecture.md](docs/architecture.md).
+### Risk management
+
+| Risk register | Risk matrix |
+| --- | --- |
+| ![Risks with derived score and severity, response, owner and status](docs/screenshots/10-risk-register.png) | ![Five-by-five probability-impact matrix with the risks in the selected cell listed](docs/screenshots/11-risk-matrix.png) |
+
+## Key features
+
+- **Project overview and stakeholder analysis:** record the project's background, problem statement, objectives, scope and success criteria, with a completeness checklist. Rate each stakeholder's influence and interest; the engagement strategy is calculated from the ratings and shown on an influence-interest grid.
+- **Process analysis:** document AS-IS and TO-BE processes as ordered steps with an owner, input, output and decision points. Record bottlenecks against AS-IS steps and improvements against TO-BE steps, mark each TO-BE step as unchanged, modified, new or automated, and compare both processes side by side.
+- **Requirements management and traceability:** record functional (`FR`) and non-functional (`NFR`) requirements with category, rationale, MoSCoW priority, status and acceptance criteria. Link each one to a source stakeholder, objectives, process steps and the requirements it depends on (circular dependencies are rejected). A traceability matrix shows every link and filters for gaps.
+- **User stories and acceptance criteria:** write stories as "As a … I want … so that …" for a stakeholder or a custom persona, and link them to the requirements they implement. Add Given / When / Then criteria with a recorded outcome (Not Tested, Passed, Failed or Blocked). A coverage view shows which requirements have stories, separately from verification.
+- **Risk management:** record each risk's category, probability and impact, response, mitigation and contingency plans, owner and status. Score and severity are calculated, risks are shown on a 5 × 5 matrix, and each risk can be linked to the stakeholders, objectives, steps, requirements and stories it affects.
+- **Consistent links:** records that others depend on cannot be deleted until the reference is removed, and identifiers such as `FR-007` or `RSK-003` are never reused.
+- **Workspace data:** restore the demonstration data or start a blank workspace. A confirmation lists how many records of each type will be deleted.
+
+## Technology stack
+
+- [React 19](https://react.dev/) with strict [TypeScript 7](https://www.typescriptlang.org/)
+- [Vite 8](https://vite.dev/) for the development server and production build
+- [React Router 8](https://reactrouter.com/) for routing, with each module loaded when first opened
+- [Tailwind CSS 4](https://tailwindcss.com/) for styling and [Lucide](https://lucide.dev/) for icons
+- [Vitest 5](https://vitest.dev/) with Testing Library and jsdom for unit tests of the business rules and storage, and integration tests that work through every module
+- [oxlint](https://oxc.rs/) for linting, used because ESLint's TypeScript parser does not support the TypeScript 7 native compiler
+- Browser `localStorage` for persistence, with no backend
 
 ## Getting started
 
-Requirements: **Node.js 22.22.2 or later in the 22.x line, or 24.15 or later in the 24.x line** (developed and tested with Node.js 24.22), and npm. Other major versions, including 23.x and 25.x, are not supported by the test tooling.
-
-Clone or download this repository, then run:
+Requires npm and Node.js 22.22.2 or later in the 22.x line, or 24.15 or later in the 24.x line (developed and tested with 24.22). Other major versions, including 23.x and 25.x, are not supported by the test tooling.
 
 ```bash
+git clone https://github.com/prxtk7/Business-Requirements-Toolkit.git
 cd Business-Requirements-Toolkit
-npm ci             # install the exact dependency versions from package-lock.json
-npm run dev        # start the development server, then open the address it prints
+npm ci
+npm run dev
 ```
 
-On first start the workspace is filled with the fictional demo. Your changes are saved in this browser only.
+Open the URL that Vite prints, normally <http://localhost:5173/>. The Northstar HVAC demonstration data loads automatically on first start.
 
-Other commands:
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the development server with live reload |
+| `npm run build` | Type-check, then create a production build in `dist/` |
+| `npm run preview` | Serve the production build locally (run `build` first) |
+| `npm run typecheck` | Run the TypeScript type check only |
+| `npm run lint` | Run oxlint, treating warnings as errors |
+| `npm test` | Run the tests once |
+| `npm run test:watch` | Run the tests in watch mode |
 
-```bash
-npm test           # run the test suite once
-npm run typecheck  # TypeScript check
-npm run lint       # oxlint
-npm run build      # type check and production build into dist/
-npm run preview    # serve the production build locally
-```
+A hosted copy would need HTTPS (record identifiers use `crypto.randomUUID()`, which requires a secure context) and a rewrite of unknown paths to `index.html`. On Windows, if every test file fails with `Cannot read properties of undefined (reading 'config')`, open the terminal at `C:\…` rather than `c:\…`.
 
-**Hosting:** the app generates record ids with `crypto.randomUUID()`, which browsers only provide in a secure context. `localhost` counts as secure, so `npm run dev` and `npm run preview` work as they are. A hosted copy must be served over HTTPS, and the host must send every unknown path to `index.html` (a single-page-app fallback or rewrite), otherwise links such as `/requirements/req_demo_fr007` return 404 when opened directly.
+## Business analysis methodology
 
-**Troubleshooting (Windows):** if every test file fails with `Cannot read properties of undefined (reading 'config')`, the terminal's working directory probably uses a lowercase drive letter (`c:\…`). Vitest then loads itself twice. Open the terminal at `C:\…` and run the tests again.
+The modules follow the order in which an analysis is usually built, and each adds records that later ones link back to.
 
-## Testing and quality
+**Stakeholder analysis.** Stakeholders are rated low, medium or high for influence and interest. High on both means *manage closely*; high influence with lower interest means *keep satisfied*; high interest with lower influence, or medium on both, means *keep informed*; the rest are *monitor*.
 
-- **365 automated tests** cover business rules, storage and schema migration, state changes, and full-application flows through every module (validation, saving, deleting with blocked or cascading links, traceability, coverage, risk scoring, keyboard behaviour).
-- TypeScript strict mode, oxlint with accessibility and React rules, and a production build all pass without warnings.
-- Accessibility: labelled form fields, error summaries linked to fields, keyboard-operable navigation and dialogs, visible focus, and focusable scroll regions for wide tables. These were checked in tests and in a browser. No formal audit was carried out.
-- Responsive layout checked at 1440 px and 390 px wide in Microsoft Edge.
+**AS-IS and TO-BE processes.** The AS-IS process records how work is done today and where it goes wrong (bottlenecks). The TO-BE process records the intended way of working, and each step states how it relates to the current one. In the demo, 1 step is unchanged, 8 are modified, 2 are new and 3 are automated.
 
-## Known limitations
+**Requirements and MoSCoW.** Functional requirements state what the proposed system must do; non-functional requirements state qualities such as availability, security or usability. Each is prioritised as Must, Should, Could or Won't have (this time). A Won't-have requirement stays in the register so the excluded request remains visible.
 
-- One project per workspace; data is stored in one browser only, with no accounts, sharing or sync.
-- No export of the analysis (PDF, Excel, CSV) yet. "Analysis export" appears in the navigation as a planned toolkit feature; it is unrelated to the management reports described in the fictional FSM requirements.
-- Verification outcomes are recorded by the user; the toolkit does not run tests.
-- Processes are step lists, not BPMN diagrams.
-- Tested in Chromium (Edge) only; English interface only.
+**Traceability.** Each requirement should trace to a source stakeholder, an objective, process steps and at least one user story. The matrix reports missing links but never fills them in. In the demo, 23 of 27 requirements are fully traced and 9 have no user story; these gaps are deliberate.
 
-See [docs/limitations.md](docs/limitations.md) for the full list.
+**User stories and acceptance criteria.** Stories split requirements into deliverable pieces of work, and acceptance criteria state the observable conditions for accepting each story. *Coverage* only means a story exists for a requirement. Verification outcomes are recorded by the user; the toolkit does not run tests.
 
-## Possible next steps
+**Risk assessment.** Probability and impact are rated 1–5, and **score = probability × impact** (1–25). A score of 1–4 is Low, 5–9 Medium, 10–16 High and 17–25 Critical. The ratings are the analyst's judgement, so the score is a way to rank risks, not a measurement. Each risk records a response (avoid, mitigate, transfer or accept), mitigation and contingency plans, and an owner.
 
-- Reporting and export: a requirements specification, the traceability matrix and the risk register as PDF or spreadsheet.
-- Import of requirements and stories from CSV.
-- Change history and simple approval workflow for requirements and stories.
-- BPMN-style diagrams generated from the recorded process steps.
-- Optional backend for multi-user projects and sharing.
+A worked example that follows spare-parts reservation from stakeholder to acceptance criteria is in [docs/requirements-workflow.md](docs/requirements-workflow.md).
 
-These are ideas, not commitments.
+## Data and privacy
 
-## About this project
+- Workspace data is stored in the browser's `localStorage`. It is specific to that browser profile and device, and clearing site data deletes it.
+- The app has no backend, accounts or synchronisation, and does not send workspace data to a server.
+- Data in `localStorage` is not encrypted, and anyone using the same browser profile can see and change it.
+- Saved data is versioned and checked on load. If it is unreadable or needs repair, the original is first copied to a backup key in `localStorage` and a notice explains what happened.
+- Restoring the demo or starting a blank workspace permanently replaces the current workspace, with no copy kept.
+- The included Northstar HVAC data is fictional. Do not enter real or confidential business data.
 
-- **Author:** Pratheek Nand
-- **Purpose:** portfolio project demonstrating business analysis and requirements engineering practice: stakeholder analysis, process analysis, requirements traceability, user stories and acceptance criteria, risk management, and a usable interface designed with accessibility in mind.
-- **How it was built:** with AI assistance, in three parts.
-  - *Implementation:* the code and tests were written with an AI coding assistant (Claude Code), working to module requirements and acceptance rules set by the author for each development phase.
-  - *Demonstration content:* the fictional Northstar HVAC scenario, requirements, user stories, acceptance criteria and risks were drafted with AI assistance, then reviewed and refined by the author.
-  - *Decisions:* the author set the scope, reviewed the results of each phase and made the project decisions, including scope decisions D1–D7. These are decisions for a fictional case, not findings validated with a real organisation.
-- **Data:** all demonstration content is fictional.
-- **License:** [MIT](LICENSE)
+## Limitations
+
+- **Analysis only:** the toolkit documents a proposed FSM system; it performs no field-service operations.
+- **One project per browser:** there are no accounts, sharing, synchronisation or collaboration, and open tabs do not share changes.
+- **No export or import:** there is no PDF, Word, Excel or CSV export and no import from other tools. "Analysis export" appears in the navigation as a planned feature and is not implemented.
+- **No history or approvals:** records keep created and updated times only, and statuses such as *Approved* have no sign-off workflow behind them.
+- **Step-based processes:** there is no BPMN diagram or notation.
+- **Fixed scales:** influence and interest use three levels and risk ratings use 1–5; neither can be configured.
+- **Limited testing:** automated tests run in jsdom, and manual checks used Microsoft Edge at desktop and mobile widths. Firefox, Safari, real mobile devices and screen readers have not been tested.
+- **Not deployed:** there is no hosted version.
+
+The full list is in [docs/limitations.md](docs/limitations.md).
